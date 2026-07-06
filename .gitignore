@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+# Build output
+dist/
+build/
+# Env
+.env
+.env.local
+# Logs
+*.log
+# Runtime data (spec-kit demo writes here)
+data/
+# OS
+.DS_Store
