@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+
+# Local SQLite database files
+*.db
+
+# Environment / secrets
+.env
+
+# Claude Code generated local config & hook debug logs
+.claude/settings.local.json
+post-log.json
+pre-log.json
+
+# OS files
+.DS_Store

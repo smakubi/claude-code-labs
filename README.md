@@ -1,31 +1,53 @@
 # Claude Code Bootcamp
 
 Hands-on workshop for getting real work done with [Claude Code](https://claude.com/claude-code).
-Four modules, run in order. Each has a concept doc, a guided demo, and a lab you drive yourself.
+Four modules, run in order. Each is a self-contained lab with its own README.
 
 ## Modules
 
 | # | Module | What you learn | Status |
 |---|---|---|---|
-| 01 | [MCP](01-mcp/) | Connect Claude Code to external tools and data via the Model Context Protocol | 🚧 Coming soon |
-| 02 | [Hooks](02-hooks/) | Automate behavior around tool calls and sessions via `settings.json` | 🚧 Coming soon |
+| 01 | [MCP](01-mcp/) | Connect Claude to external tools and data via the Model Context Protocol — build a chat CLI with `@mentions`, `/commands`, and model-callable tools | ✅ Ready |
+| 02 | [Hooks](02-hooks/) | Automate behavior around tool calls — block dangerous actions, auto-format and type-check edits, log every call | ✅ Ready |
 | 03 | [Plan Mode](03-plan-mode/) | Read-only Explore → Plan → Execute for safe multi-file changes | ✅ Ready |
 | 04 | [Spec-Driven Development](04-spec-driven-development/) | Build features from an executable spec with GitHub Spec Kit | ✅ Ready |
 
-Each module folder contains:
-
-```
-NN-module/
-├── README.md   # the lab guide — start here
-└── demo/       # guided walkthrough (README + sample project)
-```
+Each module folder is a standalone project — start with its `README.md`.
 
 ## Prerequisites
 
 - **Claude Code** installed and authenticated — `claude --version`, then `/status` inside a session.
-- **Node.js 20+** — for the Plan Mode sample project.
-- **Python 3.11+ and [`uv`](https://docs.astral.sh/uv/)** — for the Spec Kit pipeline in module 04.
+- **Node.js 20+** and npm — modules 01, 02, 03.
+- **An Anthropic API key** — module 01 (and the optional exercise in 02).
+- **`jq`** on your `PATH` — module 02 hooks (`brew install jq` on macOS).
+- **Python 3.11+ and [`uv`](https://docs.astral.sh/uv/)** — the Spec Kit pipeline in module 04.
 - **git** on your `PATH`.
+
+## Module 01 — MCP
+
+Build `mcp-chat-cli`: a terminal chat app for Claude, extended with the Model
+Context Protocol. Pull document content into prompts with `@mentions`, run
+server-defined templates with `/commands`, and give the model tools it can call.
+
+```bash
+cd 01-mcp
+npm install
+```
+
+Full setup and walkthrough in [`01-mcp/README.md`](01-mcp/README.md).
+
+## Module 02 — Hooks
+
+A realistic e-commerce query library used as a playground for **Claude Code hooks**:
+block reads of secrets, auto-format and type-check every edit, log all tool calls,
+and review new code with a second Claude instance.
+
+```bash
+cd 02-hooks
+npm run setup    # installs deps + generates your local .claude/settings
+```
+
+Exercises and solution branch in [`02-hooks/README.md`](02-hooks/README.md).
 
 ## Module 03 — Plan Mode
 
@@ -36,7 +58,7 @@ a file by hand.
 ```bash
 cd 03-plan-mode/demo/sample-project
 npm install
-npm test        # two tests should pass — that's your green baseline
+npm test         # two tests should pass — that's your green baseline
 ```
 
 Then follow [`03-plan-mode/demo/README.md`](03-plan-mode/demo/README.md), and do the lab in
@@ -52,3 +74,11 @@ Build a Tasks API end-to-end by walking Spec Kit's pipeline
 
 Follow [`04-spec-driven-development/demo/README.md`](04-spec-driven-development/demo/README.md),
 then do the lab in [`04-spec-driven-development/README.md`](04-spec-driven-development/README.md).
+
+## Credits
+
+Modules **01 (MCP)** and **02 (Hooks)** are based on workshop projects by
+**Animesh** ([@ANI-IN](https://github.com/ANI-IN)):
+
+- MCP — [ANI-IN/mcp-chat-cli](https://github.com/ANI-IN/mcp-chat-cli)
+- Hooks — `claude-hooks-workshop` (ISC License, © 2026 Animesh — see [`02-hooks/LICENSE`](02-hooks/LICENSE))

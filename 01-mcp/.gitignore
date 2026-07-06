@@ -1,0 +1,15 @@
+# Dependencies (including any timestamped duplicates created by file sync)
+node_modules
+node_modules*
+
+# Build output
+dist
+
+# Test coverage
+coverage
+
+# Environment / secrets
+.env
+
+# OS files
+.DS_Store
