@@ -290,7 +290,7 @@ The plan was the artifact. The code came out of the plan. Any mistake would have
 
 - Do the [Part 2 lab](../README.md) with the same Plan Mode habit on the bootcamp repo.
 - Find the planted defects in [flawed-plan.md](../flawed-plan.md) using the [plan-review checklist](../plan-review-checklist.md).
-- Read the [Spec-Driven demo](../../part-3-spec-driven/demo/README.md) next. Plan Mode catches mistakes in a change; a spec catches them across a feature.
+- Read the [Spec-Driven demo](../../04-spec-driven-development/demo/README.md) next. Plan Mode catches mistakes in a change; a spec catches them across a feature.
 
 ---
 
