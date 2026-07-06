@@ -96,7 +96,7 @@ You'll take a natural-language description of a Tasks API and drive it through S
 
 ## 01   Why This Demo
 
-The Part 3 lab has you write a spec **by hand** using the bootcamp template. This demo runs *before* that lab so you see the tool-driven form first. Same mental model, different packaging.
+The Part 3 lab has you write a spec **by hand** using the labs template. This demo runs *before* that lab so you see the tool-driven form first. Same mental model, different packaging.
 
 Every command, output shape, and behavior below is verified against a real end-to-end run. The full generated artifacts and source tree are checked in as [tasks-api-example-output/](tasks-api-example-output/) so you can compare your run against a known-good baseline.
 

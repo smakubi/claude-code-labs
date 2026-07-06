@@ -1,6 +1,6 @@
 # Live Demo: Claude Code Hooks
 
-### AI Builders Program — Day 1 Workshop
+### Claude Code Labs — Module 02
 
 ---
 
@@ -64,17 +64,17 @@ add a utility function called formatPrice that takes a number and returns a curr
 
 ## BEAT 4 — TYPE-CHECK and Self-Correction (~75 seconds)
 
-**SAY:** This one is my favorite for showing what hooks can actually do to an agent's behavior. I'm going to change a function signature and watch the agent fix its own mistake.
+**SAY:** This one is my favorite for showing what hooks can actually do to an agent's behavior. I'm going to change a function signature and watch the agent fix its own mistake. `createSchema` in `schema.ts` is the function that builds the database — and `main.ts` calls it. Watch what happens when I change its signature but "forget" the caller.
 
 **DO:** Prompt Claude:
 
 ```
-update the getOrderById function to also accept an options object as a second parameter
+add a required second parameter to createSchema in schema.ts called options (an object with a `seed: boolean` field). only edit schema.ts.
 ```
 
-**SAY:** Claude edits the function. The PostToolUse hook fires, runs `tsc`. TypeScript finds three call sites that are now broken — they were calling the old signature.
+**SAY:** Claude edits `schema.ts`. The PostToolUse hook fires the moment the Write completes and runs `tsc` across the whole project. TypeScript immediately flags `main.ts` — line 12 calls `createSchema(db)` with only one argument, but the function now requires two. The caller is broken.
 
-**DO:** Show the terminal output where tsc errors are fed back to Claude. Watch Claude read them and issue the follow-up edits.
+**DO:** Show the terminal output where the tsc error is fed back to Claude. Watch Claude read it and edit `main.ts` to fix the call — without you ever pointing at the file.
 
 **SAY:** This is the part people miss. The hook didn't just catch an error. It closed a feedback loop. The agent ran, the compiler ran, the errors went back to the agent, the agent corrected itself. No human in the loop. You wrote a 10-line hook and you got self-healing code generation. That's what PostToolUse with a non-zero exit code does — it sends the output back as context so the agent can react.
 
@@ -100,7 +100,7 @@ jq '.' post-log.json
 
 We have a task file — `task.md` — that says: add a query to fetch orders pending more than 3 days. Reasonable feature request. Let's let Claude work it.
 
-**DO:** Prompt Claude:
+**DO (do this BEFORE going live — it's the #1 way this beat fails):** Export your key in the shell you launch Claude Code from: `export ANTHROPIC_API_KEY=sk-ant-...`. The hook spawns a **headless** Claude via the Agent SDK, and that subprocess **cannot** borrow your interactive Claude Code login — without the key it prints `Not logged in`, exits with code **1** (not 2), so the write is **NOT blocked** and the duplicate lands silently. Verify the block once in rehearsal before you present. Then prompt Claude:
 
 ```
 work the task in task.md
@@ -116,7 +116,7 @@ Exit code 2. First Claude is blocked. And the feedback message tells it exactly 
 
 **DO:** Show `hooks/query_hook.js`. Point at the SDK call, the prompt sent to the second agent, the exit code logic.
 
-**SAY:** One agent policing another. This is agentic code review that happens before the bad code ever lands. And yes — this costs tokens, it needs an API key, which is why it's opt-in. But think about what this is. You just made duplication prevention automatic. Not a lint rule, not a PR comment three days later — an active check, in the loop, before the file changes.
+**SAY:** One agent policing another. This is agentic code review that happens before the bad code ever lands. And yes — this costs tokens, and it needs `ANTHROPIC_API_KEY` set in the environment (the headless reviewer can't borrow your interactive login), which is why it's opt-in. But think about what this is. You just made duplication prevention automatic. Not a lint rule, not a PR comment three days later — an active check, in the loop, before the file changes.
 
 ---
 

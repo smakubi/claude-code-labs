@@ -1,4 +1,4 @@
-# Claude Code Bootcamp
+# Claude Code Labs
 
 Hands-on workshop for getting real work done with [Claude Code](https://claude.com/claude-code).
 Four modules, run in order. Each is a self-contained lab with its own README.

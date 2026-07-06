@@ -8,7 +8,7 @@ The plan creates a Prisma model but never mentions running `prisma migrate dev` 
 
 ## Defect 2 — Wrong file path
 
-`src/services/webhook-delivery.ts` does not exist in the bootcamp repo. The delivery code lives in `src/services/webhook/delivery.ts`. An agent that pattern-matched on a plausible-sounding path will produce code in the wrong place — or worse, create the wrong file alongside the real one.
+`src/services/webhook-delivery.ts` does not exist in the labs repo. The delivery code lives in `src/services/webhook/delivery.ts`. An agent that pattern-matched on a plausible-sounding path will produce code in the wrong place — or worse, create the wrong file alongside the real one.
 
 ## Defect 3 — Unstated assumption about ordering and idempotency in replay
 

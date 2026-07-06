@@ -1,6 +1,6 @@
 # Flawed Plan — Find the Three Planted Defects
 
-> The plan below was produced by an agent in plan mode against the bootcamp repo. It looks reasonable. It contains **at least three deliberate defects** — find them using the [plan-review checklist](plan-review-checklist.md). There may be additional issues a careful reviewer would also flag; mark anything you can defend.
+> The plan below was produced by an agent in plan mode against the labs repo. It looks reasonable. It contains **at least three deliberate defects** — find them using the [plan-review checklist](plan-review-checklist.md). There may be additional issues a careful reviewer would also flag; mark anything you can defend.
 >
 > Do not run this plan. Read it.
 

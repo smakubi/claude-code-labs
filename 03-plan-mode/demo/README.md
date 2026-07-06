@@ -106,7 +106,7 @@ Project-relative plans unlock:
 - Carrying annotations across sessions without relying on context compaction.
 - Treating the plan file as a living document teammates edit directly.
 
-For the bootcamp, prefer project-relative plans on the running-build branch so Day 3 reviewers can see the plan the change came from.
+For the labs, prefer project-relative plans on the running-build branch so Day 3 reviewers can see the plan the change came from.
 
 ## 08   Recap
 
@@ -129,7 +129,7 @@ You'll take a deliberately messy Express handler and refactor it into a clean **
 
 ## 01   Why This Demo
 
-The Part 2 lab has you drive your own bootcamp-repo change through Plan Mode. This demo runs *before* that lab on a controlled sample so you see the mechanics on something known-good first. Every checkpoint below is verified against real behavior.
+The Part 2 lab has you drive your own labs-repo change through Plan Mode. This demo runs *before* that lab on a controlled sample so you see the mechanics on something known-good first. Every checkpoint below is verified against real behavior.
 
 ## 02   Prerequisites
 
@@ -288,10 +288,10 @@ The plan was the artifact. The code came out of the plan. Any mistake would have
 
 ## 11   Next Steps
 
-- Do the [Part 2 lab](../README.md) with the same Plan Mode habit on the bootcamp repo.
+- Do the [Part 2 lab](../README.md) with the same Plan Mode habit on the labs repo.
 - Find the planted defects in [flawed-plan.md](../flawed-plan.md) using the [plan-review checklist](../plan-review-checklist.md).
 - Read the [Spec-Driven demo](../../04-spec-driven-development/demo/README.md) next. Plan Mode catches mistakes in a change; a spec catches them across a feature.
 
 ---
 
-Sourced from [DataCamp: *Claude Code Plan Mode*](https://www.datacamp.com/tutorial/claude-code-plan-mode) (Bex Tuychiev). The `sample-project/` in this folder is bespoke to the bootcamp.
+Sourced from [DataCamp: *Claude Code Plan Mode*](https://www.datacamp.com/tutorial/claude-code-plan-mode) (Bex Tuychiev). The `sample-project/` in this folder is bespoke to the labs.

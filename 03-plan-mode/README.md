@@ -2,12 +2,12 @@
 
 **Time:** 60 minutes (30 real change + 20 flawed-plan drill + 10 pair critique). This is the lab portion only; the 75-min block in the [facilitator guide](../../README.md) opens with a 15-min live demo before the lab begins.
 
-> Before starting this lab, run the [Plan Mode demo](demo/README.md) on the provided sample project. The demo walks the full Explore → Plan → Execute loop on a repo small enough that every step is visible. This lab then applies the same habit to the bootcamp repo.
+> Before starting this lab, run the [Plan Mode demo](demo/README.md) on the provided sample project. The demo walks the full Explore → Plan → Execute loop on a repo small enough that every step is visible. This lab then applies the same habit to the labs repo.
 
 ## Part A — Drive a real change through plan mode (30 min)
 
 1. From your Part 1 worksheet, pick one item you classified as "plan mode" (suggested defaults: item 3, 5, 9, or 12).
-2. Open a fresh Claude Code session against the bootcamp repo. Engage plan mode.
+2. Open a fresh Claude Code session against the labs repo. Engage plan mode.
 3. Prompt for the change. **Do not approve the first plan.**
 4. Use [plan-review-checklist.md](plan-review-checklist.md) to interrogate it.
 5. Intervene at least once. Record v1 → v2 in your [worksheet](worksheet.md).
