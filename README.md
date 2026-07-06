@@ -74,11 +74,3 @@ Build a Tasks API end-to-end by walking Spec Kit's pipeline
 
 Follow [`04-spec-driven-development/demo/README.md`](04-spec-driven-development/demo/README.md),
 then do the lab in [`04-spec-driven-development/README.md`](04-spec-driven-development/README.md).
-
-## Credits
-
-Modules **01 (MCP)** and **02 (Hooks)** are based on workshop projects by
-**Animesh** ([@ANI-IN](https://github.com/ANI-IN)):
-
-- MCP — [ANI-IN/mcp-chat-cli](https://github.com/ANI-IN/mcp-chat-cli)
-- Hooks — `claude-hooks-workshop` (ISC License, © 2026 Animesh — see [`02-hooks/LICENSE`](02-hooks/LICENSE))
