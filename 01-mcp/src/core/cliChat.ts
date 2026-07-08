@@ -38,15 +38,21 @@ export class CliChat extends Chat {
     const mentions = query
       .split(/\s+/)
       .filter((word) => word.startsWith("@"))
-      .map((word) => word.slice(1));
+      .map((word) => word.slice(1))
+      .filter((mention) => mention.length > 0);
 
     const docIds = await this.listDocIds();
+    const seen = new Set<string>();
     const mentionedDocs: Array<[string, string]> = [];
 
-    for (const docId of docIds) {
-      if (mentions.includes(docId)) {
-        const content = await this.getDocContent(docId);
-        mentionedDocs.push([docId, content]);
+    // Resolve each mention to a doc id (exact match, or an unambiguous prefix)
+    // so partial mentions like "@pl" work even when the terminal doesn't deliver
+    // Tab for completion. Ambiguous or unknown mentions are skipped.
+    for (const mention of mentions) {
+      const docId = resolveId(mention, docIds);
+      if (docId !== undefined && !seen.has(docId)) {
+        seen.add(docId);
+        mentionedDocs.push([docId, await this.getDocContent(docId)]);
       }
     }
 
@@ -64,10 +70,24 @@ export class CliChat extends Chat {
     }
 
     const words = query.split(/\s+/);
-    const command = words[0].replace("/", "");
+    const commandToken = words[0].replace("/", "");
+
+    // Resolve the command name and the document argument by exact match or an
+    // unambiguous prefix, so "/for sp" behaves like "/format spec.txt" even when
+    // Tab completion is unavailable. Fall back to the raw token when nothing
+    // resolves, letting the server surface a clear error.
+    const promptNames = (await this.listPrompts()).map((p) => p.name);
+    const command = resolveId(commandToken, promptNames) ?? commandToken;
+
+    const argToken = words[1];
+    let docId = argToken;
+    if (argToken !== undefined) {
+      const docIds = await this.listDocIds();
+      docId = resolveId(argToken, docIds) ?? argToken;
+    }
 
     const messages = await this.docClient.getPrompt(command, {
-      doc_id: words[1],
+      doc_id: docId,
     });
 
     this.messages.push(...convertPromptMessagesToMessageParams(messages));
@@ -101,6 +121,25 @@ export class CliChat extends Chat {
 
     this.messages.push({ role: "user", content: prompt });
   }
+}
+
+/**
+ * Resolve a user-typed token to a known id. An exact (case-sensitive) match
+ * always wins; otherwise a *single* case-insensitive prefix match is accepted.
+ * Returns undefined when nothing matches or when a prefix is ambiguous (matches
+ * more than one id), so callers never silently pick the wrong document.
+ *
+ * This lets partial references like "@pl" or "/for sp" work even in terminals
+ * that don't deliver Tab as a keypress for readline completion.
+ */
+export function resolveId(token: string, ids: string[]): string | undefined {
+  if (ids.includes(token)) {
+    return token;
+  }
+
+  const lower = token.toLowerCase();
+  const matches = ids.filter((id) => id.toLowerCase().startsWith(lower));
+  return matches.length === 1 ? matches[0] : undefined;
 }
 
 export function convertPromptMessageToMessageParam(

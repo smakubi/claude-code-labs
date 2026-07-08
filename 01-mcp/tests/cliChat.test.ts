@@ -1,6 +1,47 @@
 import { describe, it, expect } from "vitest";
-import { convertPromptMessageToMessageParam } from "../src/core/cliChat.js";
+import {
+  convertPromptMessageToMessageParam,
+  resolveId,
+} from "../src/core/cliChat.js";
 import type { PromptMessage } from "@modelcontextprotocol/sdk/types.js";
+
+describe("resolveId", () => {
+  const ids = [
+    "deposition.md",
+    "report.pdf",
+    "financials.docx",
+    "outlook.pdf",
+    "plan.md",
+    "spec.txt",
+  ];
+
+  it("returns an exact match", () => {
+    expect(resolveId("plan.md", ids)).toBe("plan.md");
+  });
+
+  it("resolves an unambiguous prefix", () => {
+    expect(resolveId("pl", ids)).toBe("plan.md");
+    expect(resolveId("spec", ids)).toBe("spec.txt");
+  });
+
+  it("is case-insensitive for prefixes", () => {
+    expect(resolveId("PL", ids)).toBe("plan.md");
+  });
+
+  it("returns undefined for an ambiguous prefix", () => {
+    const ambiguous = ["report.pdf", "report.md", "plan.md"];
+    expect(resolveId("report", ambiguous)).toBeUndefined();
+  });
+
+  it("returns undefined when nothing matches", () => {
+    expect(resolveId("zzz", ids)).toBeUndefined();
+  });
+
+  it("prefers an exact match over a longer prefix sibling", () => {
+    const withSibling = ["plan", "plan.md"];
+    expect(resolveId("plan", withSibling)).toBe("plan");
+  });
+});
 
 describe("convertPromptMessageToMessageParam", () => {
   it("converts a single text content prompt message", () => {
