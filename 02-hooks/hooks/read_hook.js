@@ -11,9 +11,35 @@ async function main() {
     toolArgs.tool_input?.file_path || toolArgs.tool_input?.path || "";
   const command = toolArgs.tool_input?.command || "";
 
-  // Ensure Claude isn't trying to read the .env file, whether directly via a
-  // Read tool or indirectly through a shell command (cat/grep/etc.).
-  if (readPath.includes(".env") || command.includes(".env")) {
+  // Non-secret dotenv variants that are safe to read (templates, docs).
+  const SAFE_SUFFIXES = ["example", "sample", "template", "dist", "md"];
+
+  // A token is a protected file iff the *whole* token is a `.env` path:
+  // `.env`, `.env.local`, `dir/.env`, etc. — but not a safe variant, not a
+  // substring (`environment.ts`), and not multi-word prose (a quoted commit
+  // message tokenizes as one space-containing token, which can't match).
+  const FILE_RE = /^(?:.*\/)?\.env(?:\.([\w-]+))?$/;
+
+  // Split a shell command into tokens, keeping quoted spans intact so a
+  // `-m "Block .env reads"` message stays a single (non-filename) token.
+  const tokenize = (str) => {
+    const tokens = [];
+    const re = /"([^"]*)"|'([^']*)'|(\S+)/g;
+    let m;
+    while ((m = re.exec(str)) !== null) {
+      tokens.push(m[1] ?? m[2] ?? m[3]);
+    }
+    return tokens;
+  };
+
+  const isProtected = (token) => {
+    const m = FILE_RE.exec(token);
+    return m !== null && !SAFE_SUFFIXES.includes(m[1]);
+  };
+
+  // readPath is a single literal path; the command needs tokenizing.
+  const tokens = [readPath, ...tokenize(command)];
+  if (tokens.some(isProtected)) {
     console.error("You cannot read the .env file");
     process.exit(2);
   }
