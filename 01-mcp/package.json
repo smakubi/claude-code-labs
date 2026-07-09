@@ -11,6 +11,7 @@
   },
   "scripts": {
     "dev": "tsx src/main.ts",
+    "inspect": "mcp-inspector tsx src/mcpServer.ts",
     "build": "tsc",
     "start": "node dist/main.js",
     "test": "vitest run",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@modelcontextprotocol/inspector": "^0.22.0",
     "@types/node": "^20.0.0",
     "eslint": "^9.0.0",
     "madge": "^8.0.0",
